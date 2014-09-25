@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>Just Breathe</title>
+    <link rel=stylesheet href="css/style.css"></link>
+    <script>
+      require = {
+        paths : {
+          'jquery': 'vendor/jquery',
+          'two': 'vendor/two',
+          'url': 'vendor/url'
+        }
+      }
+    </script>
+  </head>
+  <body class="cool-grey">
+  <section>
+    <!-- show inhale/exhale -->
+    <div id="instruction"></div>
+    <!-- breathing visualization -->
+    <div id="visual"></div>
+    <!-- count down seconds-->
+    <div id="count"></div>
+    <div class="container">
+      <button class="" id="start">start</button>
+      <button class="" id="stop">stop</button>
+    </div>
+    <div class="settings">
+      <label for="inhale">Inhale in <span class="inhale-number"></span> seconds</label>
+      <input id="inhale" min="20" max="120" type="range"/>
+
+      <label for="exhale">Exhale in <span class="exhale-number"></span> seconds</label>
+      <input id="exhale" min="20" max="120" type="range"/>
+    </div>
+  </section>
+    <script src="js/vendor/require.js" data-main="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+.grey {
+  background-color:rgb(182, 193, 177);
+}
+.cool-grey{
+  background-color:rgb(152, 186, 174);
+}
+.blue {
+  background-color: rgb(32, 199, 191);
+}
+
+.tranqblue {
+  background-color: rgb(50, 134, 135);
+}
+.purple {
+  background-color: rgb(100, 81, 104);
+}
+
+section{
+  padding-bottom: 100px;
+}
