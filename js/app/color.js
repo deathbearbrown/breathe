@@ -5,6 +5,10 @@ define([], function(){
   Color.Gradient = function(color1, color2){
 
   };
+  Color.randomRGB = function(){
+    return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+  };
+
 
   Color.hsl2rgb = function (hsl) {
     var h = hsl[0] / 360,

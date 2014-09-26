@@ -14,13 +14,13 @@ function($, Two, Geo){
   }).appendTo($container[0]);
 
 
-  var w = Geo.makeTorus({
+  var w = Geo.TestGraph({
             color: {r:100, g:81, b:104},
             center: {x:10, y:10},
             two: visual,
-            sides: 28,
+            sides: 8,
             outer: 100,
-            inner: 50
+            inner: 75
           });
   w.scale = 1;
   w.translation.x = 0;

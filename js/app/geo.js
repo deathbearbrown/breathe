@@ -36,6 +36,22 @@ function(Two, Color){
     return vertices;
   };
 
+  Geo.getOddVertices = function(sides, center, radius){
+    var c = center || {x:20, y:20};
+    var r = radius || 100;
+    var vertices = [];
+    // generate vertices
+    for ( var pt = 0 ; pt < sides; pt++ ){
+      if (pt % 2 != 0){
+        var angle = (Math.PI/2) + (pt / sides) * 2 * Math.PI;
+        var x = r * Math.cos( angle ) + center.x,
+            y = radius * Math.sin( angle ) + center.y;
+            vertices.push([x,y]);
+      }
+    }
+    return vertices;
+  };
+
   Geo.tessPoly = function (color, sides, center, radius) {
     var c = center ||{x:20, y:20};
     var r = radius||100;
@@ -80,8 +96,123 @@ function(Two, Color){
     }
     return group;
   };
+  Geo.Star = function (opts) {
+    var c = opts.center || {x:20, y:20};
+    var radiusOuter = opts.outer || 100;
+    var radiusInner= opts.inner || 100;
+    var sides = opts.sides || 4;
+    var rgb = Math.round(opts.color.r) +',' + Math.round(opts.color.g) + ',' + Math.round(opts.color.b);
+    var group = new Two.Group();
+    var i = Geo.getOddVertices(sides*2,c,radiusInner);
+    var o = Geo.getVertices(sides,c,radiusOuter);;
 
-  Geo.makeTessTorus = function (opts) {
+    //generate faces
+
+        for ( var face = 0 ; face < sides; face++ ){
+          if (!i[face+1]){
+            var points = [i[face][0], i[face][1],
+                          i[0][0], i[0][1],
+                          o[0][0], o[0][1]];
+            // var points2 = [o[face][0], o[face][1],
+            //                 o[0][0], o[0][1],
+            //                 i[0][0], i[0][1]];
+          } else {
+            var points = [i[face][0], i[face][1],
+                          i[face+1][0], i[face+1][1],
+                          o[face+1][0], o[face+1][1]];
+             // var points = [o[face][0], o[face][1],
+             //              o[face+1][0], o[face+1][1],
+             //              i[face+1][0], i[face+1][1]];
+          }
+        // var poly2 = opts.two.makePolygon.apply(opts.two, points2);
+        var poly = opts.two.makePolygon.apply(opts.two, points);
+         poly.fill = 'rgba(' + rgb + ',' + '0.05' + ')';
+        poly.stroke = 'rgb(' + rgb + ')';
+         poly.linewidth = 1;
+        group.add(poly);
+      }
+    return group;
+  };
+
+   Geo.TestGraph = function (opts) {
+    var c = opts.center || {x:20, y:20};
+    var radiusOuter = opts.outer || 100;
+    var radiusInner= opts.inner || 100;
+    var sides = opts.sides || 4;
+    var rgb = Math.round(opts.color.r) +',' + Math.round(opts.color.g) + ',' + Math.round(opts.color.b);
+    var group = new Two.Group();
+    var i = Geo.getOddVertices(sides*2,c,radiusInner);
+    var o = Geo.getVertices(sides,c,radiusOuter);;
+
+    //generate faces
+
+        for ( var face = 0 ; face < sides; face++ ){
+          if (!i[face+1]){
+            var points = [i[face][0], i[face][1],
+                          i[0][0], i[0][1],
+                          o[0][0], o[0][1]];
+            var points2 = [o[face][0], o[face][1],
+                            o[0][0], o[0][1],
+                            i[face][0], i[face][1]];
+          } else {
+            var points = [i[face][0], i[face][1],
+                          i[face+1][0], i[face+1][1],
+                          o[face+1][0], o[face+1][1]];
+
+             var points2 = [o[face][0], o[face][1],
+                          o[face+1][0], o[face+1][1],
+                          i[face][0], i[face][1]];
+          }
+        var poly2 = opts.two.makePolygon.apply(opts.two, points2);
+        var poly = opts.two.makePolygon.apply(opts.two, points);
+         poly.fill = 'rgba(' + rgb + ',' + '0.05' + ')';
+        poly.stroke = 'rgb(' + rgb + ')';
+         poly.linewidth = 1;
+        group.add(poly2, poly);
+      }
+    return group;
+  };
+
+  Geo.Almost = function (opts) {
+    var c = opts.center || {x:20, y:20};
+    var radiusOuter = opts.outer || 100;
+    var radiusInner= opts.inner || 100;
+    var sides = opts.sides || 4;
+    var rgb = Math.round(opts.color.r) +',' + Math.round(opts.color.g) + ',' + Math.round(opts.color.b);
+    var group = new Two.Group();
+    var i = Geo.getOddVertices(sides*2,c,radiusInner);
+    var o = Geo.getVertices(sides,c,radiusOuter);;
+
+    //generate faces
+
+        for ( var face = 0 ; face < sides; face++ ){
+          if (!i[face+1]){
+            var points = [i[face][0], i[face][1],
+                          i[0][0], i[0][1],
+                          o[0][0], o[0][1]];
+            var points2 = [o[face][0], o[face][1],
+                            o[0][0], o[0][1],
+                            i[face][0], i[face][1]];
+          } else {
+            var points = [i[face][0], i[face][1],
+                          i[face+1][0], i[face+1][1],
+                          o[face+1][0], o[face+1][1]];
+
+             var points2 = [o[face][0], o[face][1],
+                          o[face+1][0], o[face+1][1],
+                          i[face][0], i[face][1]];
+          }
+        var poly2 = opts.two.makePolygon.apply(opts.two, points2);
+        var poly = opts.two.makePolygon.apply(opts.two, points);
+         poly.fill = 'rgba(' + rgb + ',' + '0.05' + ')';
+        poly.stroke = 'rgb(' + rgb + ')';
+         poly.linewidth = 1;
+        group.add(poly2, poly);
+      }
+    return group;
+  };
+
+  Geo.SpiroGraph = function (opts) {
     var c = opts.center || {x:20, y:20};
     var radiusOuter = opts.outer || 100;
     var radiusInner= opts.inner || 100;
@@ -108,14 +239,6 @@ function(Two, Color){
                   o[outer][0], o[outer][1]
                 ];
           }
-
-    // for ( var face = 0 ; face < (sides/2); face++ ){
-    //     var points= [
-    //           i[face][0], i[face][1],
-    //           i[face+1][0], i[face+1][1],
-    //           o[face][0], o[face][1]
-    //         ];
-    // }
         var poly = opts.two.makePolygon.apply(opts.two, points);
         poly.fill = 'rgba(' + rgb + ',' + '0.05' + ')';
         poly.stroke = 'rgb(' + rgb + ')';
