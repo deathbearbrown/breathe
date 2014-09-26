@@ -16,11 +16,10 @@ function($, Two, Geo){
 
   var w = Geo.TestGraph({
             color: {r:100, g:81, b:104},
-            center: {x:10, y:10},
+            center: {x:0, y:0},
             two: visual,
-            sides: 8,
-            outer: 100,
-            inner: 75
+            sides: 30,
+            radius: 100
           });
   w.scale = 1;
   w.translation.x = 0;

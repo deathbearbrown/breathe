@@ -136,39 +136,92 @@ function(Two, Color){
 
    Geo.TestGraph = function (opts) {
     var c = opts.center || {x:20, y:20};
-    var radiusOuter = opts.outer || 100;
-    var radiusInner= opts.inner || 100;
+    var radiusOuter = opts.radius || 100;
     var sides = opts.sides || 4;
     var rgb = Math.round(opts.color.r) +',' + Math.round(opts.color.g) + ',' + Math.round(opts.color.b);
     var group = new Two.Group();
-    var i = Geo.getOddVertices(sides*2,c,radiusInner);
-    var o = Geo.getVertices(sides,c,radiusOuter);;
-
+    var i = Geo.getOddVertices(sides*2,c,radiusOuter*0.5);
+    var o = Geo.getVertices(sides,c,radiusOuter);
+    var ii = Geo.getVertices(sides,c,radiusOuter*0.25);
+    var iii = Geo.getOddVertices(sides*2,c,radiusOuter*0.125);
     //generate faces
 
         for ( var face = 0 ; face < sides; face++ ){
           if (!i[face+1]){
             var points = [i[face][0], i[face][1],
-                          i[0][0], i[0][1],
-                          o[0][0], o[0][1]];
+                        i[0][0], i[0][1],
+                        o[0][0], o[0][1]];
+
             var points2 = [o[face][0], o[face][1],
-                            o[0][0], o[0][1],
-                            i[face][0], i[face][1]];
+                          o[0][0], o[0][1],
+                          i[face][0], i[face][1]];
+
+            var points3 =  [i[face][0], i[face][1],
+                            i[0][0], i[0][1],
+                            ii[0][0], ii[0][1]];
+
+            var points4 = [ii[face][0], ii[face][1],
+                          ii[0][0], ii[0][1],
+                          i[face][0], i[face][1]];
+
+            var points5 =  [ii[face][0], ii[face][1],
+                            ii[0][0], ii[0][1],
+                            iii[face][0], iii[face][1]];
+
+            var points6 = [iii[face][0], iii[face][1],
+                          iii[0][0], iii[0][1],
+                          ii[0][0], ii[0][1]];
+            var points7 = [iii[face][0], iii[face][1],
+                          iii[0][0], iii[0][1],
+                          c.x, c.y];
+
           } else {
             var points = [i[face][0], i[face][1],
                           i[face+1][0], i[face+1][1],
                           o[face+1][0], o[face+1][1]];
 
-             var points2 = [o[face][0], o[face][1],
+            var points2 = [o[face][0], o[face][1],
                           o[face+1][0], o[face+1][1],
                           i[face][0], i[face][1]];
+
+            var points3 = [i[face][0], i[face][1],
+                          i[face+1][0], i[face+1][1],
+                          ii[face+1][0], ii[face+1][1]];
+
+            var points4 = [ii[face][0], ii[face][1],
+                          ii[face+1][0], ii[face+1][1],
+                          i[face][0], i[face][1]];
+
+            var points5 = [ii[face][0], ii[face][1],
+                          ii[face+1][0], ii[face+1][1],
+                          iii[face][0], iii[face][1]];
+
+            var points6 = [iii[face][0], iii[face][1],
+                          iii[face+1][0], iii[face+1][1],
+                          ii[face+1][0], ii[face+1][1]];
+
+            var points7 = [iii[face][0], iii[face][1],
+                          iii[face+1][0], iii[face+1][1],
+                          c.x, c.y];
           }
+        var poly7 = opts.two.makePolygon.apply(opts.two, points7);
+        var poly6 = opts.two.makePolygon.apply(opts.two, points6);
+        var poly5 = opts.two.makePolygon.apply(opts.two, points5);
+        var poly4 = opts.two.makePolygon.apply(opts.two, points4);
+        var poly3 = opts.two.makePolygon.apply(opts.two, points3);
         var poly2 = opts.two.makePolygon.apply(opts.two, points2);
         var poly = opts.two.makePolygon.apply(opts.two, points);
-         poly.fill = 'rgba(' + rgb + ',' + '0.05' + ')';
-        poly.stroke = 'rgb(' + rgb + ')';
-         poly.linewidth = 1;
-        group.add(poly2, poly);
+
+
+        poly.fill = Color.randomRGB();
+        poly2.fill = Color.randomRGB();
+        poly3.fill = Color.randomRGB();
+        poly4.fill = Color.randomRGB();
+        poly5.fill = Color.randomRGB();
+        poly6.fill = Color.randomRGB();
+        poly7.fill = Color.randomRGB();
+        poly.linewidth = poly2.linewidth = poly3.linewidth = poly4.linewidth = poly5.linewidth = poly6.linewidth = poly7.linewidth =0;
+        group.add(poly2, poly, poly3, poly4, poly5, poly6, poly7);
       }
     return group;
   };
@@ -181,7 +234,7 @@ function(Two, Color){
     var rgb = Math.round(opts.color.r) +',' + Math.round(opts.color.g) + ',' + Math.round(opts.color.b);
     var group = new Two.Group();
     var i = Geo.getOddVertices(sides*2,c,radiusInner);
-    var o = Geo.getVertices(sides,c,radiusOuter);;
+    var o = Geo.getVertices(sides,c,radiusOuter);
 
     //generate faces
 
